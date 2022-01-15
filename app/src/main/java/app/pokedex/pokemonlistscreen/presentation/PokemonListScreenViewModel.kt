@@ -5,8 +5,11 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import app.pokedex.common.data.PokemonPagingSource
 import app.pokedex.common.data.remote.PokemonService
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class PokemonListScreenViewModel(
+@HiltViewModel
+class PokemonListScreenViewModel @Inject constructor(
     private val pokemonService: PokemonService
 ) : ViewModel() {
 

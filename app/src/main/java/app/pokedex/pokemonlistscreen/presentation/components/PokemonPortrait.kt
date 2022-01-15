@@ -16,7 +16,6 @@ import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import coil.size.PixelSize
 
-
 /**
  * A [Composable] to display the image of a Pokemon.
  * */
