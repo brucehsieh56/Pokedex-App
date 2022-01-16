@@ -3,7 +3,8 @@ package app.pokedex
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import app.pokedex.pokemonlistscreen.presentation.PokemonListScreen
+import androidx.navigation.compose.rememberNavController
+import app.pokedex.common.routing.SetUpRouting
 import app.pokedex.ui.theme.PokedexTheme
 import coil.annotation.ExperimentalCoilApi
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,7 +17,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PokedexTheme {
-                PokemonListScreen()
+                val navController = rememberNavController()
+                SetUpRouting(navHostController = navController)
             }
         }
     }

@@ -1,6 +1,7 @@
 package app.pokedex.pokemonlistscreen.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -12,19 +13,22 @@ import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import app.pokedex.common.routing.ScreenRouter
 import app.pokedex.pokemonlistscreen.domain.model.Pokemon
 import coil.annotation.ExperimentalCoilApi
 import java.util.*
-
 
 /**
  * A card displaying one pokemon with its name, number and image.
  * */
 @ExperimentalCoilApi
 @Composable
-fun PokemonRowCard(item: Pokemon) {
+fun PokemonRowCard(
+    item: Pokemon,
+    navController: NavController
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp)
@@ -40,7 +44,12 @@ fun PokemonRowCard(item: Pokemon) {
                 .background(dominantColor.copy(alpha = 0.25f))
                 .fillMaxWidth()
                 .defaultMinSize(minHeight = 80.dp)
-                .padding(horizontal = 8.dp, vertical = 4.dp),
+                .padding(horizontal = 8.dp, vertical = 4.dp)
+                .clickable {
+                    navController.navigate(
+                        route = "${ScreenRouter.PokemonDetailScreen.route}/${item.name}"
+                    )
+                },
             verticalAlignment = Alignment.CenterVertically
         ) {
             PokemonPortrait(
@@ -83,18 +92,4 @@ fun PokemonRowCard(item: Pokemon) {
             }
         }
     }
-}
-
-
-@ExperimentalCoilApi
-@Preview
-@Composable
-fun PreviewPokemonRowCard() {
-    val pokemon = Pokemon(
-        name = "bulbasaur",
-        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png",
-        number = 1
-    )
-
-    PokemonRowCard(pokemon)
 }

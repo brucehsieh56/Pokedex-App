@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import app.pokedex.pokemonlistscreen.domain.model.Pokemon
@@ -17,6 +18,7 @@ import coil.annotation.ExperimentalCoilApi
 @ExperimentalCoilApi
 @Composable
 fun PokemonListScreen(
+    navController: NavController,
     viewModel: PokemonListScreenViewModel = hiltViewModel()
 ) {
     val items = viewModel.pokemonList.collectAsLazyPagingItems()
@@ -31,7 +33,7 @@ fun PokemonListScreen(
             key = { item: Pokemon -> item.name }
         ) { item ->
             item?.let {
-                PokemonRowCard(it)
+                PokemonRowCard(item = item, navController = navController)
             }
         }
     }
