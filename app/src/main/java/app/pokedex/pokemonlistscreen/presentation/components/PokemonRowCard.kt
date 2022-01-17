@@ -74,14 +74,6 @@ fun PokemonRowCard(
                     },
                     style = MaterialTheme.typography.h4
                 )
-//                Icon(
-//                    painter = painterResource(id = R.drawable.ic_type_poison),
-//                    contentDescription = null,
-//                    modifier = Modifier
-//                        .clip(CircleShape)
-//                        .background(Color.Black),
-//                    tint = Color.Green
-//                )
                 Text(
                     text = item.getFormattedNumberString(),
                     modifier = Modifier.align(End),

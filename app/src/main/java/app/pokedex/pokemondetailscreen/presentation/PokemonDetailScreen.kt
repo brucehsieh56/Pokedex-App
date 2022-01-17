@@ -1,13 +1,37 @@
 package app.pokedex.pokemondetailscreen.presentation
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import app.pokedex.pokemondetailscreen.presentation.components.PokemonDetailCard
 
 @Composable
-fun PokemonDetailScreen(pokemonName: String) {
-    Text(
-        text = "Pokemon Detail Screen: $pokemonName",
-        style = MaterialTheme.typography.h3
-    )
+fun PokemonDetailScreen(
+    pokemonName: String,
+    viewModel: PokemonDetailScreenViewModel = hiltViewModel()
+) {
+
+    val pokemonDetail by viewModel.pokemonDetail.collectAsState()
+
+    LaunchedEffect(key1 = "Load Pokemon detail") {
+        viewModel.getSinglePokemon(pokemonName)
+    }
+
+    if (pokemonDetail != null) {
+        PokemonDetailCard(pokemonDetail!!)
+    } else {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+    }
 }

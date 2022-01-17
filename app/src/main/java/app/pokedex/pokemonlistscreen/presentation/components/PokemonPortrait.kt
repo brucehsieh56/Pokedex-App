@@ -14,6 +14,7 @@ import app.pokedex.pokemonlistscreen.domain.model.Pokemon
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
+import coil.size.OriginalSize
 import coil.size.PixelSize
 
 /**
@@ -30,7 +31,8 @@ fun PokemonPortrait(
     val painter = rememberImagePainter(
         data = pokemon.getPokemonImageUrl(),
         builder = {
-            size(PixelSize(128, 128))
+//            size(PixelSize(128, 128))
+            size(OriginalSize)
             crossfade(true)
         }
     )
