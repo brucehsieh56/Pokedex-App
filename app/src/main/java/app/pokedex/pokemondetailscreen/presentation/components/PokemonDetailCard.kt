@@ -126,6 +126,7 @@ fun PokemonDetailCard(
             )
         }
 
+        // TODO: 1/18/22 Update Pokemon stats UI
         pokemonDetail.stats.forEach {
             Row(horizontalArrangement = Arrangement.SpaceEvenly) {
                 Text(

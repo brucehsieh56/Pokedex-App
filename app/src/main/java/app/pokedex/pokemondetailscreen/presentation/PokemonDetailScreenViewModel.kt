@@ -2,8 +2,8 @@ package app.pokedex.pokemondetailscreen.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.pokedex.common.data.remote.PokemonService
 import app.pokedex.common.data.remote.dto.PokemonDto
+import app.pokedex.pokemondetailscreen.domain.usecases.GetSinglePokemonUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PokemonDetailScreenViewModel @Inject constructor(
-    private val pokemonService: PokemonService
+    private val getSinglePokemonUseCase: GetSinglePokemonUseCase
 ) : ViewModel() {
 
     private val _pokemonDetail = MutableStateFlow<PokemonDto?>(null)
@@ -20,7 +20,7 @@ class PokemonDetailScreenViewModel @Inject constructor(
 
     fun getSinglePokemon(name: String) {
         viewModelScope.launch {
-            val pokemonDto = pokemonService.getSinglePokemon(name)
+            val pokemonDto = getSinglePokemonUseCase(name)
             _pokemonDetail.value = pokemonDto
         }
     }

@@ -2,11 +2,11 @@ package app.pokedex.common.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import app.pokedex.common.data.remote.PokemonService
 import app.pokedex.pokemonlistscreen.domain.model.Pokemon
+import app.pokedex.pokemonlistscreen.domain.usecases.GetPokemonListUseCase
 
 class PokemonPagingSource(
-    private val pokemonService: PokemonService
+    private val getPokemonListUseCase: GetPokemonListUseCase
 ) : PagingSource<Int, Pokemon>() {
 
     companion object {
@@ -20,7 +20,7 @@ class PokemonPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Pokemon> {
         val currentPage = params.key ?: 0
         return try {
-            val response = pokemonService.getPokemonList(
+            val response = getPokemonListUseCase(
                 limit = numberOfPokemonRequested,
                 offset = currentPage * numberOfPokemonRequested
             )

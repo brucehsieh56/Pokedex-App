@@ -23,6 +23,8 @@ fun PokemonListScreen(
 ) {
     val items = viewModel.pokemonList.collectAsLazyPagingItems()
 
+    // TODO: 1/18/22 Add Pokemon search functionality
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
