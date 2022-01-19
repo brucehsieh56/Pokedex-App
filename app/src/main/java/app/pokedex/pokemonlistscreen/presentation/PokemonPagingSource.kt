@@ -1,7 +1,8 @@
-package app.pokedex.common.data
+package app.pokedex.pokemonlistscreen.presentation
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import app.pokedex.common.utils.Either
 import app.pokedex.pokemonlistscreen.domain.model.Pokemon
 import app.pokedex.pokemonlistscreen.domain.usecases.GetPokemonListUseCase
 
@@ -19,31 +20,22 @@ class PokemonPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Pokemon> {
         val currentPage = params.key ?: 0
-        return try {
-            val response = getPokemonListUseCase(
+
+        return when (
+            val result = getPokemonListUseCase(
                 limit = numberOfPokemonRequested,
                 offset = currentPage * numberOfPokemonRequested
             )
-            val isLastedPage = response.next == null
-
-            val pokemonList = response.results.map { result ->
-
-                val numberString = Pokemon.extractPokemonNumber(result)
-
-                Pokemon(
-                    name = result.name,
-                    imageUrl = "${Pokemon.baseImageUrl}${numberString}.png",
-                    number = numberString.toInt()
+        ) {
+            is Either.Left -> LoadResult.Error(result.a)
+            is Either.Right -> {
+                val pokemonList = result.b
+                LoadResult.Page(
+                    data = pokemonList.pokemonList,
+                    prevKey = if (currentPage == 0) null else currentPage - 1,
+                    nextKey = if (pokemonList.isLastedPage) null else currentPage + 1
                 )
             }
-
-            LoadResult.Page(
-                data = pokemonList,
-                prevKey = if (currentPage == 0) null else currentPage - 1,
-                nextKey = if (isLastedPage) null else currentPage + 1
-            )
-        } catch (t: Throwable) {
-            LoadResult.Error(t)
         }
     }
 }

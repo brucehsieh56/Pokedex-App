@@ -1,3 +1,3 @@
 package app.pokedex.common.utils
 
-object Constants {}
+fun String.Companion.empty() = ""

@@ -14,18 +14,16 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import app.pokedex.common.data.remote.dto.PokemonDto
 import app.pokedex.common.domain.model.PokemonType
 import app.pokedex.common.utils.toFeetAndInches
 import app.pokedex.common.utils.toLb
+import app.pokedex.pokemondetailscreen.domain.model.PokemonDetails
 import app.pokedex.pokemonlistscreen.domain.model.Pokemon
 import app.pokedex.pokemonlistscreen.presentation.components.PokemonPortrait
 import java.util.*
 
 @Composable
-fun PokemonDetailCard(
-    pokemonDetail: PokemonDto
-) {
+fun PokemonDetailCard(pokemonDetails: PokemonDetails) {
     val initialColor = MaterialTheme.colors.surface
     var dominantColor by remember {
         mutableStateOf(initialColor)
@@ -42,9 +40,9 @@ fun PokemonDetailCard(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val pokemon = Pokemon(
-            name = pokemonDetail.name,
-            imageUrl = pokemonDetail.sprites.front_default,
-            number = pokemonDetail.id
+            name = pokemonDetails.name,
+            imageUrl = pokemonDetails.sprites!!.front_default,
+            number = pokemonDetails.id
         )
 
         PokemonPortrait(
@@ -59,7 +57,7 @@ fun PokemonDetailCard(
         Spacer(modifier = Modifier.height(48.dp))
 
         Text(
-            text = pokemonDetail.name.replaceFirstChar {
+            text = pokemonDetails.name.replaceFirstChar {
                 it.titlecase(Locale.getDefault())
             },
             style = MaterialTheme.typography.h2
@@ -74,7 +72,7 @@ fun PokemonDetailCard(
         ) {
 
             Spacer(modifier = Modifier.width(16.dp))
-            pokemonDetail.types.forEach {
+            pokemonDetails.types.forEach {
                 Surface(shape = RoundedCornerShape(12.dp)) {
                     val type = PokemonType.values().first { pokemonType ->
                         pokemonType.name == it.type.name.uppercase()
@@ -107,7 +105,7 @@ fun PokemonDetailCard(
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "${pokemonDetail.weight.toLb()} lbs",
+                text = "${pokemonDetails.weight.toLb()} lbs",
                 style = MaterialTheme.typography.body1,
                 fontWeight = FontWeight.Bold
             )
@@ -120,14 +118,14 @@ fun PokemonDetailCard(
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = pokemonDetail.height.toFeetAndInches(),
+                text = pokemonDetails.height.toFeetAndInches(),
                 style = MaterialTheme.typography.body1,
                 fontWeight = FontWeight.Bold
             )
         }
 
         // TODO: 1/18/22 Update Pokemon stats UI
-        pokemonDetail.stats.forEach {
+        pokemonDetails.stats.forEach {
             Row(horizontalArrangement = Arrangement.SpaceEvenly) {
                 Text(
                     text = "${it.stat.name.uppercase()}: ",
