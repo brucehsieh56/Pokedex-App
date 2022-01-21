@@ -1,12 +1,15 @@
 package app.pokedex.common.di
 
+import android.content.Context
 import app.pokedex.BuildConfig
 import app.pokedex.common.data.PokemonRepository
 import app.pokedex.common.data.PokemonRepositoryImpl
 import app.pokedex.common.data.remote.PokemonService
+import app.pokedex.common.utils.NetworkChecker
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -44,7 +47,16 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePokemonRepository(pokemonService: PokemonService): PokemonRepository {
-        return PokemonRepositoryImpl(pokemonService)
+    fun providePokemonRepository(
+        networkChecker: NetworkChecker,
+        pokemonService: PokemonService
+    ): PokemonRepository {
+        return PokemonRepositoryImpl(networkChecker, pokemonService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNetworkChecker(@ApplicationContext context: Context): NetworkChecker {
+        return NetworkChecker(context)
     }
 }
