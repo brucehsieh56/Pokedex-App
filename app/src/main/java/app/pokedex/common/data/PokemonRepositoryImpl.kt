@@ -6,7 +6,6 @@ import app.pokedex.common.data.remote.dto.PokemonListDto
 import app.pokedex.common.utils.Either
 import app.pokedex.common.utils.Failure
 import app.pokedex.common.utils.NetworkChecker
-import app.pokedex.common.utils.empty
 import app.pokedex.pokemondetailscreen.domain.model.PokemonDetails
 import app.pokedex.pokemonlistscreen.domain.model.PokemonList
 import retrofit2.Call
@@ -57,8 +56,8 @@ class PokemonRepositoryImpl @Inject constructor(
                     )
                 )
             }
-        } catch (exception: Throwable) {
-            Either.Left(Failure.ServerError(message = exception.message ?: String.empty()))
+        } catch (throwable: Throwable) {
+            Either.Left(Failure.ServerError(cause = throwable))
         }
     }
 }

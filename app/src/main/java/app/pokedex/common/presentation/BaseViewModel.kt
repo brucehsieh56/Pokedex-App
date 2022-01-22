@@ -16,4 +16,8 @@ abstract class BaseViewModel : ViewModel() {
     protected fun handleFailure(failure: Failure) {
         _failure.value = failure
     }
+
+    protected fun resetFailure() {
+        _failure.value = null
+    }
 }

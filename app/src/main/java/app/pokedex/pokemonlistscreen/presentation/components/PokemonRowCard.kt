@@ -41,15 +41,15 @@ fun PokemonRowCard(
 
         Row(
             modifier = Modifier
-                .background(dominantColor.copy(alpha = 0.25f))
-                .fillMaxWidth()
-                .defaultMinSize(minHeight = 80.dp)
-                .padding(horizontal = 8.dp, vertical = 4.dp)
                 .clickable {
                     navController.navigate(
                         route = "${ScreenRouter.PokemonDetailScreen.route}/${item.name}"
                     )
-                },
+                }
+                .background(dominantColor.copy(alpha = 0.25f))
+                .fillMaxWidth()
+                .defaultMinSize(minHeight = 80.dp)
+                .padding(horizontal = 8.dp, vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             PokemonPortrait(
