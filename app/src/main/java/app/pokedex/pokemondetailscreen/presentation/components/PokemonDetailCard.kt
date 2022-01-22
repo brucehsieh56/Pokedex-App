@@ -74,23 +74,28 @@ fun PokemonDetailCard(pokemonDetails: PokemonDetails) {
             Spacer(modifier = Modifier.width(16.dp))
             pokemonDetails.types.forEach {
                 Surface(shape = RoundedCornerShape(12.dp)) {
-                    val type = PokemonType.values().first { pokemonType ->
+
+                    // App crashes if using .first() sometimes
+                    val types = PokemonType.values().filter { pokemonType ->
                         pokemonType.name == it.type.name.uppercase()
                     }
 
-                    Row(
-                        modifier = Modifier
-                            .defaultMinSize(minWidth = 96.dp)
-                            .background(PokemonType.getCorrespondingColor(type))
-                            .padding(horizontal = 8.dp, vertical = 4.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Icon(
-                            painter = painterResource(id = PokemonType.getCorrespondingIcon(type)),
-                            contentDescription = type.name
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(text = type.name)
+                    if (types.isNotEmpty()) {
+                        val type = types[0]
+                        Row(
+                            modifier = Modifier
+                                .defaultMinSize(minWidth = 96.dp)
+                                .background(PokemonType.getCorrespondingColor(type))
+                                .padding(horizontal = 8.dp, vertical = 4.dp),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            Icon(
+                                painter = painterResource(id = PokemonType.getCorrespondingIcon(type)),
+                                contentDescription = type.name
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(text = type.name)
+                        }
                     }
                 }
 
