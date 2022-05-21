@@ -1,5 +1,9 @@
 # Pokedex App
 
+<img src="Screenshot_01.png" alt="Entry Page" width="200"/>
+<img src="Screenshot_02.png" alt="Detail Page" width="200"/>
+<img src="Screenshot_03.png" alt="No network connection" width="200"/>
+
 Pokedex App is a sample Android app listing the statistics and images of Pokédex that are provided
 by [PokeApi](https://pokeapi.co/). It is built with Jetpack Compose, Retrofit, Dagger Hilt and adopts MVVM architecture.
 

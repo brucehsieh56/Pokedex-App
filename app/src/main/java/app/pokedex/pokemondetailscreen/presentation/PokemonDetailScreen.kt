@@ -10,7 +10,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import app.pokedex.common.presentation.components.CenterCircularProgressIndicator
 import app.pokedex.common.presentation.components.HandleFailure
 import app.pokedex.pokemondetailscreen.presentation.components.PokemonDetailCard
-import kotlinx.coroutines.delay
 
 @Composable
 fun PokemonDetailScreen(
@@ -23,7 +22,6 @@ fun PokemonDetailScreen(
     val pokemonDetails by viewModel.pokemonDetails.collectAsState()
 
     LaunchedEffect(key1 = failure) {
-        delay(300) // For debugging
         failure ?: viewModel.getSinglePokemon(pokemonName)
     }
 
